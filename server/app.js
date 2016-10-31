@@ -1,7 +1,7 @@
 require('dotenv').config({ silent: true });
 
 const PORT = process.env.PORT || 8080;
-const MONGODB_URI = 'mongodb://localhost/antgeekdb';
+const MONGODB_URI = 'mongodb://localhost/client-directory';
 
 const bodyParser = require('body-parser');
 const express = require('express');
@@ -28,13 +28,13 @@ app.use((req, res, next) => {
   next()
 })
 
-require('./config/webpack')(app);
+// require('./config/webpack')(app);
 
 app.use('/api', require('./routes/api'));
 
-app.use("*", function(req, res) {
-  res.sendFile(path.join(__dirname, '../public/index.html'));
-});
+// app.use("*", function(req, res) {
+//   res.sendFile(path.join(__dirname, '../public/index.html'));
+// });
 
 // SERVER LISTEN
 server.listen(PORT, err => {
