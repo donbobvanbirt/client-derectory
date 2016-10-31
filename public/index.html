@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AntGeek</title>
+</head>
+<body>
+  <div id="root"></div>
+
+  <div>
+    <h1>AntGeek</h1>
+    <form method="POST" enctype="multipart/form-data" action="api/upload">
+      <input type="file" name="image"/>
+      <input type="text" name="title"/>Title
+      <input type="text" name="tags"/>tags
+      <button>Upload</button>
+    </form>
+  </div>
+
+  <script src="/bundle.js"></script>
+</body>
+</html>
