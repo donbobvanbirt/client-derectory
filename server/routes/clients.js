@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
+const moment = require('moment');
 
-const Client = require('../models/Client')
+const Client = require('../models/Client');
 
 // retrieve client by id
 router.get('/:id', (req, res) => {
@@ -34,15 +35,25 @@ router.get('/', (req, res) => {
   let page = parseInt(query.page) || 0;
   let minage = parseInt(query.minage) || 0;
   let maxage = parseInt(query.maxage) || 120;
-
+  let afterDate = query.visitafter || 19000101;
+  let beforeDate = query.visitbefore;
+  let visitafter = moment(afterDate).format();
+  let visitbefore = moment(beforeDate).format();
 
   delete query.pagesize;
   delete query.page;
   delete query.minage;
   delete query.maxage;
+  delete query.visitafter;
+  delete query.visitbefore;
 
   Client.find(query)
-  .where({'age': {$lt: maxage}, 'age': {$gt: minage}})
+  .where({
+    'age': {$lt: maxage},
+    'age': {$gt: minage},
+    'lastVisit': {$lt: visitbefore},
+    'lastVisit': {$gte: visitafter}
+  })
   .skip(page * pagesize)
   .limit(pagesize)
   .then(clients => res.send(clients))
