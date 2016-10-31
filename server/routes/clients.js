@@ -28,7 +28,6 @@ router.put('/:id', (req, res) => {
 
 // retrive all clients
 router.get('/', (req, res) => {
-  // console.log('req.query', req.query)
   let { query } = req;
 
   let pagesize = parseInt(query.pagesize) || 20;

@@ -28,13 +28,7 @@ app.use((req, res, next) => {
   next()
 })
 
-// require('./config/webpack')(app);
-
 app.use('/api', require('./routes/api'));
-
-// app.use("*", function(req, res) {
-//   res.sendFile(path.join(__dirname, '../public/index.html'));
-// });
 
 // SERVER LISTEN
 server.listen(PORT, err => {
