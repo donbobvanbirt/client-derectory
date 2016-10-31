@@ -27,7 +27,24 @@ router.put('/:id', (req, res) => {
 
 // retrive all clients
 router.get('/', (req, res) => {
-  Client.find()
+  // console.log('req.query', req.query)
+  let { query } = req;
+
+  let pagesize = parseInt(query.pagesize) || 20;
+  let page = parseInt(query.page) || 0;
+  let minage = parseInt(query.minage) || 0;
+  let maxage = parseInt(query.maxage) || 120;
+
+
+  delete query.pagesize;
+  delete query.page;
+  delete query.minage;
+  delete query.maxage;
+
+  Client.find(query)
+  .where({'age': {$lt: maxage}, 'age': {$gt: minage}})
+  .skip(page * pagesize)
+  .limit(pagesize)
   .then(clients => res.send(clients))
   .catch(err => res.status(400).send(err))
 })
